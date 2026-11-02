@@ -34,3 +34,7 @@ jobs:
       - name: Run ${{ matrix.script }}
         working-directory: tests
         run: bash ${{ matrix.script }}
+
+git add .github/workflows/ci.yml
+git commit -m "Add GitHub Actions CI workflow"
+git push origin main
