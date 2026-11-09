@@ -1,1 +1,21 @@
-# use here COPY 1_12 .
+FROM ubuntu:22.04
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    ca-certificates \
+    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG REACT_APP_BACKEND_URL=http://localhost:8080
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+
+COPY 1_12 .
+RUN npm install
+RUN npm run build
+RUN npm install -g serve
+
+EXPOSE 5001
+CMD serve -s -l 5001 build
